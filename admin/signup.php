@@ -4,11 +4,6 @@
 <?php
 
 
-/*$username = "";
-$password = "";
-$the_message = "";*/
-
-
 if(isset($_POST['submit'])) {
     
 $firstname = trim($_POST['firstname']);
