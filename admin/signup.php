@@ -10,9 +10,11 @@ $firstname = trim($_POST['firstname']);
 $lastname = trim($_POST['lastname']);    
 $username = trim($_POST['username']);
 $password = trim($_POST['password']);
+	
+$encrypted_password = password_hash($password, PASSWORD_DEFAULT); 
 
 
- if(!empty($firstname and $lastname and $username and $password)) {
+ if(!empty($firstname and $lastname and $username and $encrypted_password)) {
 
 
 $user = new User;
@@ -20,7 +22,7 @@ $user = new User;
 $user->first_name = $firstname;
 $user->last_name = $password;
 $user->username = $username;
-$user->password = $password;
+$user->password = $encrypted_password;
     
 $user->create();
     
