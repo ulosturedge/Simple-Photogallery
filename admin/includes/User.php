@@ -82,17 +82,36 @@ class User extends Db_object {
 
         $username = $database->escape_string($username);
         $password = $database->escape_string($password);
+        
 
 
         $sql = "SELECT * FROM " . self::$db_table . " WHERE ";
         $sql .= "username = '{$username}' ";
-        $sql .= "AND password = '{$password}' ";
-        $sql .= "LIMIT 1";
+        $result = $database->query($sql);
+        $row = mysqli_fetch_assoc($result);
+        $hash_pwd = $row['password'];
+        $hash = password_verify($password,$hash_pwd);
+        
+        echo $hash;
 
-        $the_result_array = self::find_by_query($sql);
+        if ($hash == 0) {
 
-        return !empty($the_result_array) ? array_shift($the_result_array) : false;
+            
+            echo 'hash does not match';
+            return false;
 
+        } else {
+        
+
+            $sql = "SELECT * FROM " . self::$db_table . " WHERE ";
+            $sql .= "username = '{$username}' ";
+            $sql .= "AND password = '{$hash_pwd}' ";
+            $sql .= "LIMIT 1";
+
+            $the_result_array = self::find_by_query($sql);
+
+            return !empty($the_result_array) ? array_shift($the_result_array) : false;
+        }
 
 
 
