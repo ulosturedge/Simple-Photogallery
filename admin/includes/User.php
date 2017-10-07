@@ -92,12 +92,8 @@ class User extends Db_object {
         $hash_pwd = $row['password'];
         $hash = password_verify($password,$hash_pwd);
         
-        echo $hash;
-
         if ($hash == 0) {
-
             
-            echo 'hash does not match';
             return false;
 
         } else {
